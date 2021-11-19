@@ -1,58 +1,23 @@
 import { useEffect } from "react";
 import { useRouter } from 'next/router'
+import { authenticate, getFeed, updateFeed } from "../lib/feed";
 
 export default function Login({ setCurrentAccount }) {
   const router = useRouter()
 
-  const checkIfWalletIsConnected = async () => {
-    try {
-      const { ethereum } = window;
-
-      if (!ethereum) {
-        console.log("Make sure you have metamask!");
-        return;
-      } else {
-        console.log("We have the ethereum object", ethereum);
-      }
-
-      const accounts = await ethereum.request({ method: "eth_accounts" });
-
-      if (accounts.length !== 0) {
-        const account = accounts[0];
-        console.log("Found an authorized account:", account);
-        setCurrentAccount(account);
-      } else {
-        console.log("No authorized account found");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const connectWallet = async () => {
-    try {
-      const { ethereum } = window;
-
-      if (!ethereum) {
-        alert("Get MetaMask!");
-        return;
-      }
-
-      const accounts = await ethereum.request({
-        method: "eth_requestAccounts",
-      });
-
-      console.log("Connected", accounts[0]);
-      setCurrentAccount(accounts[0]);
-      router.push('/dashboard')
-
-    } catch (error) {
-      console.log(error);
-    }
-  };
+	const didAuth = async () => {
+		const ceramicStuff = await authenticate();
+		if (ceramicStuff.did) {
+			setCurrentAccount(ceramicStuff.did);
+			console.log("Logged in: " + ceramicStuff.did);
+			router.push('/dashboard')
+		} else {
+			console.warn("Login Failed");
+		}
+	};
 
   useEffect(() => {
-    checkIfWalletIsConnected();
+		didAuth()
   }, []);
 
   return (
@@ -71,7 +36,7 @@ export default function Login({ setCurrentAccount }) {
         </div>
         <button
           className="bg-indigo-600 hover:bg-indigo-500 text-white px-5 h-10 rounded-md cursor-pointer transition-colors duration-200 ease-in-out transform"
-          onClick={connectWallet}
+          onClick={didAuth}
         >
           Connect Wallet
         </button>
