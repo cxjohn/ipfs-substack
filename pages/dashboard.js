@@ -1,11 +1,8 @@
 import Head from "next/head";
-import Link from "next/link";
 import NavBar from "./../src/layout/Navbar";
 import Feed from "./../src/components/Feed";
 
 export default function Dashboard({ currentAccount }) {
-    
-    console.log(window.ethereum)
   return (
     <div className="min-h-screen">
       <Head>
