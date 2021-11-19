@@ -4,7 +4,7 @@ module.exports = {
   darkMode: false,
   theme: {
     fontFamily: {
-      sans: ["Domine"],
+      sans: ["Lato"],
     },
     extend: {
       backgroundImage: (theme) => ({

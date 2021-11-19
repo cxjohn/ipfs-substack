@@ -1,4 +1,6 @@
+import Head from "next/head";
 import parse, { attributesToProps } from "html-react-parser";
+import NavBar from "../../src/layout/Navbar";
 
 const text = {
   title: "The contract of any next regime",
@@ -38,12 +40,19 @@ const text = {
 // }
 export default function Read() {
   return (
-    <div className="container mx-auto py-24">
+    <>
+    <Head>
+        <title>Read Post - 3Feed</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+    <NavBar />
+    <div className="container mx-auto mt-20 py-24">
       <div className="max-w-[728px] mx-auto">
         <div className="text-4xl font-bold pb-2">{text.title}</div>
         <div className="text-xl text-gray-500 pb-5">{text.subtitle}</div>
         {parse(text.body)}
       </div>
     </div>
+    </>
   );
 }

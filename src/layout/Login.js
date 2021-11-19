@@ -1,6 +1,9 @@
 import { useEffect } from "react";
+import { useRouter } from 'next/router'
 
 export default function Login({ setCurrentAccount }) {
+  const router = useRouter()
+
   const checkIfWalletIsConnected = async () => {
     try {
       const { ethereum } = window;
@@ -41,6 +44,8 @@ export default function Login({ setCurrentAccount }) {
 
       console.log("Connected", accounts[0]);
       setCurrentAccount(accounts[0]);
+      router.push('/dashboard')
+
     } catch (error) {
       console.log(error);
     }

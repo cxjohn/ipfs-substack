@@ -39,10 +39,11 @@ export default class EditorConvertToHTML extends Component {
           toolbarClassName="!border-t-0 !border-l-0 !border-r-0"
           toolbar={{
             fontFamily: { options: [], className: "hidden" },
-            inline: { inDropdown: true },
+            inline: { options: ['bold', 'italic'] },
             list: { inDropdown: true },
+            embedded: { className: "!hidden" },
             textAlign: { inDropdown: true },
-            history: { inDropdown: true },
+            
           }}
           onEditorStateChange={this.onEditorStateChange}
         />
