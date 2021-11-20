@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
-export default function NavBar({ currentAccount }) {
+export default function NavBar({ }) {
   const [publish, setPublish] = useState(false);
   const router = useRouter();
 
@@ -16,7 +16,7 @@ export default function NavBar({ currentAccount }) {
         <div className="flex items-center justify-between w-full h-20">
           <div className="flex items-center justify-between">
             {router.pathname === "/dashboard" ? (
-              `Welcome ${currentAccount?.slice(0, 9)}`
+              `Welcome ${window.did?.slice(0, 9)}`
             ) : (
               <Link href="/dashboard">
                 <button className="hover:text-gray-600 transition-colors duration-200 ease-in-out transform">

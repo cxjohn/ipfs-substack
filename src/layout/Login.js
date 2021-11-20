@@ -1,15 +1,14 @@
 import { useEffect } from "react";
 import { useRouter } from 'next/router'
-import { authenticate, getFeed, updateFeed } from "../lib/feed";
+import { authenticate, getFeed, updateFeed } from "../../lib/feed";
 
 export default function Login({ setCurrentAccount }) {
   const router = useRouter()
 
 	const didAuth = async () => {
-		const ceramicStuff = await authenticate();
-		if (ceramicStuff.did) {
-			setCurrentAccount(ceramicStuff.did);
-			console.log("Logged in: " + ceramicStuff.did);
+		const ceramicID = await authenticate();
+		if (ceramicID) {
+			console.log("Logged in: " + ceramicID);
 			router.push('/dashboard')
 		} else {
 			console.warn("Login Failed");
