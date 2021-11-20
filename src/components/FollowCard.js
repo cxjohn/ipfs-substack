@@ -14,8 +14,8 @@ export default function FollowCard() {
     //setLoading(false);
   };
   return (
-    <div className="py-24 fixed top-8 right-12">
-      <div className="flex border-2 border-indigo-600 bg-white transition-colors duration-200 ease-in-out transform font-semibold rounded-md drop-shadow-lg">
+    <div className="py-24 fixed top-8 right-12 z-10">
+      <div className="flex border-2 border-indigo-600 bg-white font-semibold rounded-md drop-shadow-lg hover:drop-shadow-xl">
         <div className="p-8">
           <div className="text-2xl text-left mb-6">Follow new creator</div>
           <form
@@ -23,7 +23,7 @@ export default function FollowCard() {
             onSubmit={handleSubmit(onSubmit)}
           >
             <input
-              className="text-xl font-bold focus:outline-none focus:bg-indigo-50 mb-4 rounded-md"
+              className="text-xl font-bold focus:outline-none focus:bg-indigo-50 mb-4 py-1 pl-1 rounded-md border-b"
               type="text"
               id="title"
               placeholder="Enter creator id..."
