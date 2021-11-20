@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from 'next/router'
-import { authenticate, getFeed, updateFeed } from "../../lib/feed";
+import { authenticate } from "../../lib/feed";
 
 export default function Login({ setCurrentAccount }) {
   const router = useRouter()

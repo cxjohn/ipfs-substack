@@ -7,6 +7,7 @@ import { EditorState, convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import { useForm } from "react-hook-form";
 import { authenticate, updateFeed } from "../lib/feed";
+import { createLock } from "../lib/locks";
 
 const Prose = dynamic(() => import("../src/components/Prose"), {
   ssr: false,
@@ -35,9 +36,18 @@ export default function Publish() {
   const onSubmit = async (data) => {
     setLoading(true);
     data.body = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-    data.time = Date.now();
-    const streamId = await updateFeed(data);
-    router.push("/read/" + streamId);
+		data.time = Date.now();
+		let lockFailed = false;
+		if (data.paid) {
+			const lockAddress = await createLock(window.did);
+			data.paid = lockAddress;
+
+			if (!lockAddress) { lockFailed = true; }
+		}
+		if (!lockFailed) {
+			const id = await updateFeed(data);
+			router.push("/read/" + id);
+		}
     setLoading(false);
   };
 

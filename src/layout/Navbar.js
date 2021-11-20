@@ -16,7 +16,7 @@ export default function NavBar({ }) {
         <div className="flex items-center justify-between w-full h-20">
           <div className="flex items-center justify-between">
             {router.pathname === "/dashboard" ? (
-              `Welcome ${window.did?.split(":")[2].slice(0, 9)}`
+              `Welcome ${window.did}`
             ) : (
               <Link href="/dashboard">
                 <button className="hover:text-gray-600 transition-colors duration-200 ease-in-out transform">
