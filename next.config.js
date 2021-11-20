@@ -1,3 +1,12 @@
 module.exports = {
-    exportTrailingSlash: true,
-  };
+  target: "serverless",
+  async rewrites() {
+    return [
+      {
+        source: "/:any*",
+        destination: "/",
+      },
+    ];
+  },
+  exportTrailingSlash: true,
+};
