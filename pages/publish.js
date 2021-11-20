@@ -35,9 +35,9 @@ export default function Publish() {
   const onSubmit = async (data) => {
     setLoading(true);
     data.body = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-    data.time = Date.now();
-    const streamId = await updateFeed(data);
-    router.push("/read/" + streamId);
+		data.time = Date.now();
+    const { id, count } = await updateFeed(data);
+    router.push("/read/" + id);
     setLoading(false);
   };
 
