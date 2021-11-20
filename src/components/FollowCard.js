@@ -15,7 +15,7 @@ export default function FollowCard() {
   };
   return (
     <div className="py-24 fixed top-8 right-12 z-10">
-      <div className="flex border-2 border-indigo-600 bg-white font-semibold rounded-md drop-shadow-lg hover:drop-shadow-xl">
+      <div className="flex border-2 border-indigo-600 bg-white font-semibold rounded-md drop-shadow-lg hover:drop-shadow-xl transition-all duration-200 ease-in-out transform">
         <div className="p-8">
           <div className="text-2xl text-left mb-6">Follow new creator</div>
           <form

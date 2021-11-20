@@ -8,7 +8,7 @@ import draftToHtml from "draftjs-to-html";
 import { useForm } from "react-hook-form";
 import { authenticate, updateFeed } from "../lib/feed";
 
-const Prose = dynamic(() => import("./../src/components/Prose.tsx"), {
+const Prose = dynamic(() => import("../src/components/Prose"), {
   ssr: false,
 });
 
