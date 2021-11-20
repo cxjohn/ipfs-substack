@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useRouter } from 'next/router'
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import NavBar from "./../src/layout/Navbar";
@@ -12,10 +13,12 @@ const Prose = dynamic(() => import("./../src/components/Prose.tsx"), {
 });
 
 export default function Publish() {
+  const router = useRouter()
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
   };
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		if (!window.did) { authenticate(); }
@@ -28,11 +31,13 @@ export default function Publish() {
   } = useForm({ mode: "onChange" });
 
   const onSubmit = async (data) => {
+		setLoading(true);
     data.body = draftToHtml(
       convertToRaw(editorState.getCurrentContent())
     );
-		await updateFeed(0x123, data);
-    return console.log(data);
+		const streamId = await updateFeed(0x123, data);
+		setLoading(false);
+		router.push('/read/'+streamId);
   };
 
   return (
@@ -81,11 +86,29 @@ export default function Publish() {
                   <span>{errors.title && "Please enter a title"}</span>
                   <span>{errors.subtitle && "Please enter a subtitle"}</span>
                 </div>
-                <input
-                  className="bg-indigo-600 hover:bg-indigo-500 text-white px-5 h-10 rounded-md cursor-pointer transition-colors duration-200 ease-in-out transform ml-2"
+                <button
+                  className="bg-indigo-600 hover:bg-indigo-500 text-white w-32 h-10 rounded-md cursor-pointer transition-colors duration-200 ease-in-out transform ml-2"
                   type="submit"
-                  value="Publish"
-                />
+                >
+                  {loading ? (
+                    <>
+                      <svg
+                        className="animate-spin h-5 w-5 mr-3"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                        />
+                      </svg>
+                      Publishing
+                    </>
+                  ) : (
+                    "Publish"
+                  )}
+                </button>
               </div>
             </div>
           </form>
