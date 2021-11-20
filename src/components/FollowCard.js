@@ -6,12 +6,15 @@ export default function FollowCard() {
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
-    setLoading(true);
-    console.log("hello?");
+		const inner = async () => {
+			setLoading(true);
 
-    // TODO: We should validate this
-    subscribeToDid(data.id);
-    //setLoading(false);
+			// TODO: We should validate this
+			await subscribeToDid(data.id);
+			setLoading(false);
+		};
+
+		inner();
   };
   return (
     <div className="py-24 fixed top-8 right-12 z-10">

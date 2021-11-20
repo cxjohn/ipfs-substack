@@ -19,7 +19,6 @@ export default function Read() {
 
       const article = await getArticle(postId);
       setPost(article);
-      console.log(article);
     };
 
     inner();

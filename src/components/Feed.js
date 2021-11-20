@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { useRouter } from 'next/router'
 import { useEffect, useState } from "react";
 import { authenticate, getFeeds } from "../../lib/feed";
+import { checkLock, purchaseKey } from "../../lib/locks";
 
 const articles = [
   {
@@ -39,10 +41,23 @@ const articles = [
 ];
 
 export default function Feed({}) {
+  const router = useRouter()
   const [feed, setFeed] = useState([]);
 
-  const unlock = (id) => {
-    console.log(id);
+  const unlock = (article) => {
+		const inner = async () => {
+			if (typeof article.paid === "string" && await checkLock(article.paid)) {
+				router.push('/read/' + article.id);
+			} else {
+				if (await purchaseKey(article.paid)) {
+					router.push('/read/' + article.id);
+				} else {
+					console.log("Did not buy the article");
+				}
+			}
+		};
+
+		inner();
   };
 
   useEffect(() => {
@@ -61,16 +76,16 @@ export default function Feed({}) {
   return (
     <div className="py-24">
       <div className="border-b pb-4">
-        {articles.map((article, idx) => {
+        {feed.map((article, idx) => {
           return (
             <>
               {article.paid ? (
                 <div
-                  onClick={() => unlock(article.id)}
+                  onClick={() => unlock(article)}
                   className="relative w-[728px] flex py-3 pl-3 mb-4 cursor-pointer bg-gray-100 hover:bg-gray-50 transition-colors duration-100 ease-in-out transform rounded-md"
                   key={idx}
                 >
-                  <div className="absolute -top-2 -left-2">
+                  <div className="absolute -top-2 -left-2" key={idx}>
                     <svg
                       x="0px"
                       y="0px"
