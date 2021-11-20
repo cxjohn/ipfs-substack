@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useEffect } from "react";
 import NavBar from "./../src/layout/Navbar";
 import Feed from "./../src/components/Feed";
+import FollowCard from "./../src/components/FollowCard"
 
 export default function Dashboard({ }) {
   return (
@@ -12,6 +13,7 @@ export default function Dashboard({ }) {
       </Head>
       <NavBar />
       <main className="flex flex-col items-center justify-center w-full flex-1 px-20 pt-20 text-center">
+        <FollowCard />
         <Feed />
       </main>
     </div>
