@@ -90,7 +90,7 @@ export default function Publish() {
                 >
                   {loading ? (
                     <>
-                       <div classnName="fixed left-3 top-[9px] w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
+                       <div className="fixed left-3 top-[9px] w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
                       Publishing
                     </>
                   ) : (

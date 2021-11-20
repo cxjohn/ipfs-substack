@@ -1,9 +1,11 @@
 import { useForm } from "react-hook-form";
+import { subscribeToDid } from "../../lib/feed";
 
 export default function FollowCard({}) {
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
-    console.log(data);
+		// TODO: We should validate this
+		subscribeToDid(data.id);
   };
   return (
     <div className="py-24 fixed top-8 right-12">
