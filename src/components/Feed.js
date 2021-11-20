@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { authenticate, getFeed } from "../../lib/feed";
+import { authenticate, getFeeds } from "../../lib/feed";
 
 export default function Feed({}) {
   const [feed, setFeed] = useState([]);
@@ -11,7 +11,7 @@ export default function Feed({}) {
         await authenticate();
       }
 
-      const feed = await getFeed(0x123);
+      const feed = await getFeeds();
       setFeed(feed);
     };
 
