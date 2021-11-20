@@ -1,6 +1,9 @@
 import Head from "next/head";
+import { useRouter } from 'next/router'
+import { useEffect, useState } from "react";
 import parse, { attributesToProps } from "html-react-parser";
 import NavBar from "../../src/layout/Navbar";
+import { authenticate, getArticle } from "../../lib/feed";
 
 const text = {
   title: "The contract of any next regime",
@@ -39,6 +42,25 @@ const text = {
 //   });
 // }
 export default function Read() {
+	const [post, setPost] = useState({});
+	const router = useRouter()
+
+  const { postId } = router.query
+
+	useEffect(() => {
+		const inner = async () => {
+			if (!window.did) { await authenticate(); }
+
+			const article = await getArticle(postId);
+			setPost(article);
+			console.log(article);
+		}
+
+		inner();
+		if (!window.did) { authenticate(); }
+
+	}, []);
+
   return (
     <>
     <Head>
@@ -48,9 +70,9 @@ export default function Read() {
     <NavBar />
     <div className="container mx-auto mt-20 py-24">
       <div className="max-w-[728px] mx-auto">
-        <div className="text-4xl font-bold pb-2">{text.title}</div>
-        <div className="text-xl text-gray-500 pb-5">{text.subtitle}</div>
-        {parse(text.body)}
+        <div className="text-4xl font-bold pb-2">{post.title}</div>
+        <div className="text-xl text-gray-500 pb-5">{post.subtitle}</div>
+        {post.body && parse(post.body)}
       </div>
     </div>
     </>

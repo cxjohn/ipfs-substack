@@ -1,10 +1,11 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import NavBar from "./../src/layout/Navbar";
 import { EditorState, convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import { useForm } from "react-hook-form";
+import { authenticate, updateFeed } from "../lib/feed";
 
 const Prose = dynamic(() => import("./../src/components/Prose.tsx"), {
   ssr: false,
@@ -16,16 +17,21 @@ export default function Publish() {
     setEditorState(editorState);
   };
 
+	useEffect(() => {
+		if (!window.did) { authenticate(); }
+	}, [])
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     data.body = draftToHtml(
       convertToRaw(editorState.getCurrentContent())
     );
+		await updateFeed(0x123, data);
     return console.log(data);
   };
 

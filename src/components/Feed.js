@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { authenticate, getFeed } from "../../lib/feed";
 
 const articles = [
   {
@@ -95,11 +97,24 @@ const articles = [
 ];
 
 export default function Feed({}) {
+	const [feed, setFeed] = useState([]);
+
+	useEffect(() => {
+		const inner = async () => {
+			if (!window.did) { await authenticate(); }
+
+			const feed = await getFeed(0x123);
+			setFeed(feed);
+		}
+
+		inner();
+	}, []);
+
   return (
     <div className="py-24">
-      {articles.map((article, idx) => {
+      {feed.map((article, idx) => {
         return (
-            <Link href="/read/123" key={idx}>
+            <Link href={"/read/" + article.id} key={idx}>
           <div
             onClick={() => console.log("open sesame")}
             className="w-[728px] flex py-3 pl-3 cursor-pointer hover:bg-gray-50"
