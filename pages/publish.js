@@ -1,12 +1,16 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import NavBar from "./../src/layout/Navbar";
-import Prose from "./../src/components/Prose.tsx";
 import { EditorState, convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import { useForm } from "react-hook-form";
 import { authenticate, updateFeed } from "../lib/feed";
+
+const Prose = dynamic(() => import("./../src/components/Prose.tsx"), {
+  ssr: false,
+});
 
 export default function Publish() {
   const router = useRouter();
@@ -31,7 +35,7 @@ export default function Publish() {
   const onSubmit = async (data) => {
     setLoading(true);
     data.body = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-		data.time = Date.now();
+    data.time = Date.now();
     const streamId = await updateFeed(data);
     router.push("/read/" + streamId);
     setLoading(false);
@@ -90,7 +94,7 @@ export default function Publish() {
                 >
                   {loading ? (
                     <>
-                       <div className="fixed left-3 top-[9px] w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
+                      <div className="fixed left-3 top-[9px] w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
                       Publishing
                     </>
                   ) : (
