@@ -1,28 +1,26 @@
 import Head from "next/head";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 import NavBar from "./../src/layout/Navbar";
+import Prose from "./../src/components/Prose.tsx";
 import { EditorState, convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import { useForm } from "react-hook-form";
 import { authenticate, updateFeed } from "../lib/feed";
 
-const Prose = dynamic(() => import("./../src/components/Prose.tsx"), {
-  ssr: false,
-});
-
 export default function Publish() {
-  const router = useRouter()
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
   };
-	const [loading, setLoading] = useState(false);
 
-	useEffect(() => {
-		if (!window.did) { authenticate(); }
-	}, [])
+  useEffect(() => {
+    if (!window.did) {
+      authenticate();
+    }
+  }, []);
 
   const {
     register,
@@ -31,13 +29,11 @@ export default function Publish() {
   } = useForm({ mode: "onChange" });
 
   const onSubmit = async (data) => {
-		setLoading(true);
-    data.body = draftToHtml(
-      convertToRaw(editorState.getCurrentContent())
-    );
-		const streamId = await updateFeed(0x123, data);
-		setLoading(false);
-		router.push('/read/'+streamId);
+    setLoading(true);
+    data.body = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+    const streamId = await updateFeed(0x123, data);
+    router.push("/read/" + streamId);
+    setLoading(false);
   };
 
   return (
@@ -86,23 +82,14 @@ export default function Publish() {
                   <span>{errors.title && "Please enter a title"}</span>
                   <span>{errors.subtitle && "Please enter a subtitle"}</span>
                 </div>
+
                 <button
-                  className="bg-indigo-600 hover:bg-indigo-500 text-white w-32 h-10 rounded-md cursor-pointer transition-colors duration-200 ease-in-out transform ml-2"
+                  className="bg-indigo-600 hover:bg-indigo-500 text-white w-32 h-10 rounded-md cursor-pointer transition-colors duration-200 ease-in-out transform text-left ml-2 pl-[38px]"
                   type="submit"
                 >
                   {loading ? (
                     <>
-                      <svg
-                        className="animate-spin h-5 w-5 mr-3"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                        />
-                      </svg>
+                       <div classnName="fixed left-3 top-[9px] w-5 h-5 border-b-2 border-white rounded-full animate-spin"></div>
                       Publishing
                     </>
                   ) : (

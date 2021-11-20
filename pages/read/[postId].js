@@ -69,10 +69,12 @@ export default function Read() {
       </Head>
     <NavBar />
     <div className="container mx-auto mt-20 py-24">
-      <div className="max-w-[728px] mx-auto">
+      <div className="max-w-[728px] mx-auto border-b">
         <div className="text-4xl font-bold pb-2">{post.title}</div>
         <div className="text-xl text-gray-500 pb-5">{post.subtitle}</div>
-        {post.body && parse(post.body)}
+        <div className='pb-8'>
+          {post.body && parse(post.body)}
+          </div>
       </div>
     </div>
     </>
