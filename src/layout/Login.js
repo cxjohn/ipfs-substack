@@ -22,16 +22,9 @@ export default function Login({ setCurrentAccount }) {
   return (
     <main className="flex h-screen justify-between">
       <div className="flex flex-col items-center justify-center w-1/2">
-        <div className="text-4xl font-bold pb-2">Login using MetaMask</div>
+        <div className="text-4xl font-bold pb-2">Login using your Crypto wallet</div>
         <div className="text-xl text-gray-500 pb-5">
-          Don't have it? Sign up{" "}
-          <a
-            className="text-indigo-600 hover:text-indigo-500"
-            href="https://metamask.io/"
-            target="_blank"
-          >
-            here
-          </a>
+          Login should happen automatically, if not connect below.
         </div>
         <button
           className="bg-indigo-600 hover:bg-indigo-500 text-white px-5 h-10 rounded-md cursor-pointer transition-colors duration-200 ease-in-out transform"

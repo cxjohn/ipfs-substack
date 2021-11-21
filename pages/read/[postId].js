@@ -57,9 +57,9 @@ export default function Read() {
       <div className="container mx-auto mt-20 py-24">
         <div className="max-w-[728px] mx-auto border-b">
           <div className="text-4xl font-bold pb-2">{post.title}</div>
-    {payout > 0 && (
-      <div className="text-l text-gray-500 pb-5" onClick={claim}>Claim your {payout} ETH</div>
-    )}
+          {payout > 0 && (
+            <div className="text-l text-gray-500 pb-5 cursor-pointer" onClick={claim}>Claim your {payout} ETH</div>
+           )}
           <div className="text-xl text-gray-500 pb-5">{post.subtitle}</div>
           <div className="pb-8">{post.body && parse(post.body)}</div>
         </div>
