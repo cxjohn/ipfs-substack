@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { useRouter } from 'next/router'
 import { authenticate } from "../../lib/feed";
 
@@ -15,9 +15,9 @@ export default function Login({ setCurrentAccount }) {
 		}
 	};
 
-  useEffect(() => {
-		didAuth()
-  }, []);
+  // useEffect(() => {
+		// didAuth()
+  // }, []);
 
   return (
     <main className="flex h-screen justify-between">

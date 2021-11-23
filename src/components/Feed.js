@@ -45,19 +45,24 @@ export default function Feed({}) {
   const [feed, setFeed] = useState([]);
 
   const unlock = (article) => {
-		const inner = async () => {
-			if (typeof article.paid === "string" && await checkLock(article.paid)) {
-				router.push('/read/' + article.id);
-			} else {
-				if (await purchaseKey(article.paid)) {
-					router.push('/read/' + article.id);
-				} else {
-					console.log("Did not buy the article");
-				}
-			}
-		};
+    const inner = async () => {
+      if (typeof article.paid === "string" && await checkLock(article.paid)) {
+        router.push('/read/' + article.id);
+      } else {
+        if (await purchaseKey(article.paid)) {
+          router.push('/read/' + article.id);
+        } else {
+          console.log("Did not buy the article");
+        }
+      }
+    };
 
-		inner();
+    inner();
+  };
+
+  const refreshFeed = async () => {
+    const feed = await getFeeds();
+    setFeed(feed);
   };
 
   useEffect(() => {
@@ -66,11 +71,15 @@ export default function Feed({}) {
         await authenticate();
       }
 
-      const feed = await getFeeds();
-      setFeed(feed);
+      refreshFeed();
     };
 
+    const timer = setInterval(refreshFeed, 5000);
     inner();
+
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
 
   return (
