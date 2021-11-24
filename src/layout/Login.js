@@ -30,7 +30,7 @@ export default function Login({ setCurrentAccount }) {
           className="bg-indigo-600 hover:bg-indigo-500 text-white px-5 h-10 rounded-md cursor-pointer transition-colors duration-200 ease-in-out transform"
           onClick={didAuth}
         >
-          Enter
+          Login
         </button>
       </div>
       <div className="bg-sheet bg-cover w-1/2"></div>
