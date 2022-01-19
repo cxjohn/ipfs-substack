@@ -1,3 +1,3 @@
-# Hosted [here](https://green-thunder-1523.on.fleek.co/)
+# Hosted [here](https://3feed.on.fleek.co/)
 Submission for [Web3 Jam](https://jam.ethglobal.com/)
 
